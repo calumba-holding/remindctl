@@ -6,11 +6,10 @@
 - Return a calendar-missing error from add, edit, and complete instead of trapping when EventKit leaves a reminder without a calendar after save. Thanks @SebTardif.
 - Exclude reminders due at the start of next week from `week` and `show week` listings. Thanks @SebTardif.
 
-## 0.3.5 - 2026-08-30
-
 - Skip fetched reminders with a missing calendar so orphaned rows cannot crash reminder reads. Thanks @SebTardif.
-- Update the docs workflow to Node.js 26 and `actions/setup-node@v7`, and verify the docs build in pull-request CI.
 - Bound `doctor` rich-read sqlite3 probes to 30 seconds so a stuck local database query fails with a timeout instead of hanging the CLI. Thanks @SebTardif.
+- Update the docs workflow to Node.js 26 and `actions/setup-node@v7`, and verify the docs build in pull-request CI.
+- Keep release-policy tests runnable while release notes are still `Unreleased`, without relaxing the finalized-notes requirement for real releases.
 
 ## 0.3.4 - 2026-08-09
 
