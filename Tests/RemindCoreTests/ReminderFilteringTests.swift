@@ -153,4 +153,66 @@ struct ReminderFilteringTests {
     #expect(result.count == 1)
     #expect(result.first?.title == "Completed")
   }
+
+  @Test("Week filter excludes a date-only due on next week's first instant")
+  func weekFilterExcludesNextWeekStart() {
+    var weekCalendar = Calendar(identifier: .gregorian)
+    weekCalendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
+    weekCalendar.locale = Locale(identifier: "en_US_POSIX")
+    weekCalendar.firstWeekday = 1
+
+    // Wednesday 2023-11-15 12:00 UTC. Sunday-start week is [2023-11-12, 2023-11-19).
+    let now = Date(timeIntervalSince1970: 1_700_049_600)
+    let interval = weekCalendar.dateInterval(of: .weekOfYear, for: now)
+    #expect(interval != nil)
+    let start = interval?.start ?? now
+    let end = interval?.end ?? now
+
+    let thisWeekStart = ReminderItem(
+      id: "week-start",
+      title: "ThisWeekStart",
+      notes: nil,
+      isCompleted: false,
+      completionDate: nil,
+      priority: .none,
+      dueDate: start,
+      dueDateIsAllDay: true,
+      listID: "a",
+      listName: "Home"
+    )
+    let lastInstantThisWeek = ReminderItem(
+      id: "week-last",
+      title: "LastInstantThisWeek",
+      notes: nil,
+      isCompleted: false,
+      completionDate: nil,
+      priority: .none,
+      dueDate: end.addingTimeInterval(-1),
+      listID: "a",
+      listName: "Home"
+    )
+    let nextWeekStart = ReminderItem(
+      id: "next-week",
+      title: "NextWeekStart",
+      notes: nil,
+      isCompleted: false,
+      completionDate: nil,
+      priority: .none,
+      dueDate: end,
+      dueDateIsAllDay: true,
+      listID: "a",
+      listName: "Home"
+    )
+
+    let result = ReminderFiltering.apply(
+      [thisWeekStart, lastInstantThisWeek, nextWeekStart],
+      filter: .week,
+      now: now,
+      calendar: weekCalendar
+    )
+    let titles = Set(result.map(\.title))
+    #expect(titles.contains("ThisWeekStart"))
+    #expect(titles.contains("LastInstantThisWeek"))
+    #expect(!titles.contains("NextWeekStart"))
+  }
 }

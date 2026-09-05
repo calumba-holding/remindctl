@@ -19,6 +19,8 @@ remindctl all
 remindctl 2026-01-03
 ```
 
+`week` and `show week` include incomplete reminders due within the current calendar week, including its start but excluding the opening midnight of the next week.
+
 Limit a view to one list:
 
 ```bash

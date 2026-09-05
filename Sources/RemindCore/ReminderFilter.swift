@@ -67,7 +67,7 @@ public enum ReminderFiltering {
       let start = interval?.start ?? startOfToday
       let end = interval?.end ?? now
       return reminders.filter { reminder in
-        let inWeek = reminder.dueDate.map { $0 >= start && $0 <= end } ?? false
+        let inWeek = reminder.dueDate.map { $0 >= start && $0 < end } ?? false
         return !reminder.isCompleted && inWeek
       }
     case .overdue:
