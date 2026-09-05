@@ -86,6 +86,7 @@ remindctl list --list-id 7A12 --rename Archive
 ```
 
 Mutating list operations accept one list name. Read-only list views can accept multiple names.
+`list <name> --create` creates a missing list or reuses a unique matching list. Repeating it preserves the list and its reminders; `--json` reports the current incomplete and overdue counts. An ambiguous name fails instead of creating another list.
 List names resolve by exact match, case-insensitive match, then a normalized match that ignores emoji and punctuation.
 If a name is ambiguous, use `--list-id`.
 

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Make `list --create` reuse a unique existing list instead of inserting another calendar with the same title, and report its current reminder counts in JSON. Thanks @SebTardif.
 - Return a calendar-missing error from add, edit, and complete instead of trapping when EventKit leaves a reminder without a calendar after save. Thanks @SebTardif.
 
 ## 0.3.5 - 2026-08-30
