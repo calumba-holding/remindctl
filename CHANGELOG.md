@@ -1,11 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.3.5 - 2026-09-05
+
+**Highlights:** Repeated list creation now preserves existing lists, reminder reads and writes handle missing calendars, and week views respect calendar boundaries.
 
 - Make `list --create` reuse a unique existing list instead of inserting another calendar with the same title, and report its current reminder counts in JSON. Thanks @SebTardif.
 - Return a calendar-missing error from add, edit, and complete instead of trapping when EventKit leaves a reminder without a calendar after save. Thanks @SebTardif.
 - Exclude reminders due at the start of next week from `week` and `show week` listings. Thanks @SebTardif.
-
 - Skip fetched reminders with a missing calendar so orphaned rows cannot crash reminder reads. Thanks @SebTardif.
 - Bound `doctor` rich-read sqlite3 probes to 30 seconds so a stuck local database query fails with a timeout instead of hanging the CLI. Thanks @SebTardif.
 - Update the docs workflow to Node.js 26 and `actions/setup-node@v7`, and verify the docs build in pull-request CI.
